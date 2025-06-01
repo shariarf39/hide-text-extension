@@ -1,18 +1,29 @@
-const sensitiveKeywords = ["password", "email", "username", "ssn", "card", "phone"];
-
 function hideSensitiveText(node) {
   if (node.nodeType === Node.TEXT_NODE) {
     let text = node.textContent;
-    sensitiveKeywords.forEach(word => {
-      const regex = new RegExp(`\\b${word}\\b`, "gi");
-      text = text.replace(regex, match => "•".repeat(match.length));
-    });
+
+    // Mask email
+    text = text.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}/gi, match => "•".repeat(match.length));
+
+    // Mask Bangladeshi phone number
+    text = text.replace(/\b01[0-9]{9}\b/g, match => "•".repeat(match.length));
+
+    // Mask strong password-like strings
+    text = text.replace(/\b[a-zA-Z0-9!@#$%^&*()_+=\-]{8,}\b/g, match => "•".repeat(match.length));
+
     node.textContent = text;
-  } else if (node.nodeType === Node.ELEMENT_NODE && node.nodeName !== "SCRIPT" && node.nodeName !== "STYLE") {
+  } else if (
+    node.nodeType === Node.ELEMENT_NODE &&
+    node.nodeName !== "SCRIPT" &&
+    node.nodeName !== "STYLE"
+  ) {
     node.childNodes.forEach(hideSensitiveText);
   }
 }
 
-window.addEventListener("load", () => {
-  hideSensitiveText(document.body);
+// Wait for DOM and then run based on user setting
+chrome.storage.local.get("maskingEnabled", (result) => {
+  if (result.maskingEnabled) {
+    hideSensitiveText(document.body);
+  }
 });

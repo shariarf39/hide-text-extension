@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
   <h3>Hide Text Settings</h3>
@@ -11,13 +13,17 @@
     <option value="🔒">🔒</option>
     <option value="❌">❌</option>
   </select>
-  <br><br>
+  <br /><br />
   <button id="screenshotBtn">📷 Screenshot</button>
-  <br><br>
+  <br /><br />
   <label class="toggle-dark">
     <input type="checkbox" id="darkModeToggle" /> 🌙 Dark Mode
   </label>
-  <br><br>
+  <br />
+  <label>
+    <input type="checkbox" id="toggleMasking" /> 🔒 Enable Auto Masking
+  </label>
+  <br /><br />
   <button id="undoBtn">↩️ Undo Hidden</button>
   <script src="popup.js"></script>
 </body>
