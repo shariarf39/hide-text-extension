@@ -1,8 +1,29 @@
 body {
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
   padding: 10px;
+  background-color: #fff;
+  color: #000;
 }
-select, button {
-  width: 100%;
+
+body.dark {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+button, select {
+  padding: 5px 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+.toggle-dark {
   margin-top: 10px;
+  display: inline-block;
+  cursor: pointer;
 }

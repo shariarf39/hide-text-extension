@@ -1,20 +1,29 @@
 {
   "manifest_version": 3,
-  "name": "Sensitive Text Hider",
+  "name": "Hide Sensitive Text",
   "version": "1.1",
-  "description": "Hide selected sensitive text with custom symbols before taking screenshots.",
-  "permissions": ["contextMenus", "scripting", "storage", "activeTab"],
+  "description": "Hide or mask sensitive information before taking screenshots.",
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
   "background": {
     "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon/icons8-hide-100.png",
+      "48": "icon/icons8-hide-100.png",
+      "128": "icon/icons8-hide-100.png"
+    }
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"]
     }
-  ],
-  "action": {
-    "default_popup": "popup.html",
-    "default_title": "Text Hider Settings"
-  }
+  ]
 }

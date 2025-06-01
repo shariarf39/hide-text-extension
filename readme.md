@@ -75,7 +75,7 @@ Just open the extension popup and select your preferred option.
 
 ---
 
-## 📦 Coming Soon
+## 📦 loaded
 
 * 🔄 Automatic hiding of sensitive keywords (e.g., “password”, “email”)
 * 🖼️ One-click screenshot after hiding

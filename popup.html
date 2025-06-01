@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Text Hider</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Replace Text With</h2>
-  <select id="symbolSelect">
-    <option value="***">***</option>
+  <h3>Hide Text Settings</h3>
+  <select id="symbol">
+    <option value="*">*</option>
     <option value="❤️">❤️</option>
     <option value="🔒">🔒</option>
     <option value="❌">❌</option>
   </select>
-  <p><button id="clearHidden">Undo All</button></p>
-
+  <br><br>
+  <button id="screenshotBtn">📷 Screenshot</button>
+  <br><br>
+  <label class="toggle-dark">
+    <input type="checkbox" id="darkModeToggle" /> 🌙 Dark Mode
+  </label>
+  <br><br>
+  <button id="undoBtn">↩️ Undo Hidden</button>
   <script src="popup.js"></script>
 </body>
 </html>

@@ -1,26 +1,47 @@
-const symbolSelect = document.getElementById('symbolSelect');
-const clearButton = document.getElementById('clearHidden');
-
-symbolSelect.addEventListener('change', () => {
-  chrome.storage.local.set({ replaceSymbol: symbolSelect.value });
+const symbolSelect = document.getElementById("symbol");
+symbolSelect.addEventListener("change", () => {
+  localStorage.setItem("maskSymbol", symbolSelect.value);
 });
 
-clearButton.addEventListener('click', () => {
-  chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
+const undoBtn = document.getElementById("undoBtn");
+undoBtn.addEventListener("click", () => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      func: () => {
-        const originalMap = window._hiddenOriginalMap || {};
-        for (const [key, val] of Object.entries(originalMap)) {
-          const el = document.querySelector(`[data-hide-id="${key}"]`);
-          if (el) {
-            el.textContent = val;
-            el.style.backgroundColor = "";
-            el.removeAttribute('data-hide-id');
-          }
-        }
-        window._hiddenOriginalMap = {};
+      target: { tabId: tabs[0].id },
+      function: () => {
+        document.querySelectorAll("span[data-original-text]").forEach(span => {
+          const text = document.createTextNode(span.dataset.originalText);
+          span.replaceWith(text);
+        });
       }
     });
   });
+});
+
+const screenshotBtn = document.getElementById("screenshotBtn");
+screenshotBtn.addEventListener("click", () => {
+  chrome.tabs.captureVisibleTab(null, { format: "png" }, (dataUrl) => {
+    const a = document.createElement("a");
+    a.href = dataUrl;
+    a.download = "screenshot.png";
+    a.click();
+  });
+});
+
+const darkToggle = document.getElementById("darkModeToggle");
+darkToggle.addEventListener("change", () => {
+  if (darkToggle.checked) {
+    document.body.classList.add("dark");
+    localStorage.setItem("darkMode", "enabled");
+  } else {
+    document.body.classList.remove("dark");
+    localStorage.setItem("darkMode", "disabled");
+  }
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  if (localStorage.getItem("darkMode") === "enabled") {
+    document.body.classList.add("dark");
+    darkToggle.checked = true;
+  }
 });
